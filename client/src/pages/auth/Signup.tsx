@@ -1,25 +1,31 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { SignUpInputState, userSignUpSchema } from '@/schema/user-schema';
 import { Separator } from '@radix-ui/react-separator';
+import { error } from 'console';
 import { LockKeyhole, Mail, PersonStanding, Phone } from 'lucide-react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-interface SignupProps {
-  fullname: string;
-  email: string;
-  password: string;
-  contact: string;
-}
+// interface SignupProps {
+//   fullname: string;
+//   email: string;
+//   password: string;
+//   contact: string;
+// }
+
+// (Getting input validation from zod schema)
 
 const Signup = () => {
-  const [input, setInput] = useState<SignupProps>({
+  const [input, setInput] = useState<SignUpInputState>({
     fullname: '',
     email: '',
     password: '',
     contact: '',
   });
+
+  const [errors, setErrors] = useState<Partial<SignUpInputState>>({});
 
   // Email, Password change handler
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,10 +33,23 @@ const Signup = () => {
     setInput({ ...input, [name]: value }); // Spreading and updating the 'input' element that got changed
   };
 
-  // Login button handler
+  // Sign Up button handler
   const signupSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-    console.log(input);
+
+    // Validation
+    const result = userSignUpSchema.safeParse(input); //safeParse is used to avoid runtime errors : method provided by zod
+    if (!result.success) {
+      setErrors(
+        result.error?.formErrors.fieldErrors as Partial<SignUpInputState>,
+      );
+      return;
+    }
+    // console.log('Errors:', errors);
+    // console.log('Format:', result.error?.formErrors.fieldErrors);
+    // console.log(input);
+
+    // API implementation..
   };
 
   return (
@@ -50,6 +69,9 @@ const Signup = () => {
             onChange={changeEventHandler}
           />
           <PersonStanding className='absolute inset-y-6 left-2 text-gray-600 pointer-events-none' />
+          {errors && (
+            <span className='text-xs text-red-900'>{errors.fullname}</span>
+          )}
         </div>
         <div className='mb-4 relative'>
           <Label className='mb-1'>Email</Label>
@@ -62,6 +84,9 @@ const Signup = () => {
             onChange={changeEventHandler}
           />
           <Mail className='absolute inset-y-6 left-2 text-gray-600 pointer-events-none' />
+          {errors && (
+            <span className='text-xs text-red-900'>{errors.email}</span>
+          )}
         </div>
         <div className='mb-4 relative'>
           <Label className='mb-1'>Password</Label>
@@ -74,6 +99,9 @@ const Signup = () => {
             onChange={changeEventHandler}
           />
           <LockKeyhole className='absolute inset-y-6 left-2 text-gray-600 pointer-events-none' />
+          {errors && (
+            <span className='text-xs text-red-900'>{errors.password}</span>
+          )}
         </div>
         <div className='mb-4 relative'>
           <Label className='mb-1'>Contact</Label>
@@ -86,6 +114,9 @@ const Signup = () => {
             onChange={changeEventHandler}
           />
           <Phone className='absolute inset-y-6 left-2 text-gray-600 pointer-events-none' />
+          {errors && (
+            <span className='text-xs text-red-900'>{errors.contact}</span>
+          )}
         </div>
         <div>
           <Button
