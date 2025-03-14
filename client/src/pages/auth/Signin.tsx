@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SignInInputState, userSignInSchema } from '@/schema/user-schema';
-import { Separator } from '@radix-ui/react-separator';
+import { Separator } from '@/components/ui/separator';
 import { LockKeyhole, Mail } from 'lucide-react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -45,7 +45,7 @@ const Signin = () => {
         onSubmit={signinSubmitHandler}
         className='p-8 w-full max-w-md border border-black rounded-lg bg-gray-100'
       >
-        <div className='mt-4 relative'>
+        <div className='my-4 relative'>
           <Label className='mb-1'>Email</Label>
           <Input
             type='email'
@@ -79,11 +79,23 @@ const Signin = () => {
             Sign In
           </Button>
         </div>
-        <Separator />
+
+        <div className='my-1'>
+          <p>
+            <Link
+              to='/passwordrecovery'
+              className='mx-1 font-bold text-sm hover:text-gray-600'
+            >
+              Forgotten your Password?
+            </Link>
+          </p>
+        </div>
+        <Separator></Separator>
+
         <div className='my-1'>
           <p>
             Don't have an account?
-            <Link to='/signup' className='mx-1 font-bold'>
+            <Link to='/signup' className='mx-1 font-bold hover:text-gray-600'>
               Sign Up
             </Link>
           </p>
