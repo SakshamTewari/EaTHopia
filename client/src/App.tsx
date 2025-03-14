@@ -3,6 +3,7 @@ import Signin from './pages/auth/Signin';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Signup from './pages/auth/Signup';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 const appRouter = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const appRouter = createBrowserRouter([
   {
     path: '/signup',
     element: <Signup />,
+  },
+  {
+    path: '/passwordrecovery',
+    element: <ForgotPassword />,
   },
 ]);
 
