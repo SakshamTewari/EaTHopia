@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { KeyRound } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +35,8 @@ const VerifyEmail = () => {
   return (
     <div className='flex justify-center items-center h-screen w-full'>
       <div className='flex flex-col gap-3 border border-black p-8 max-w-md rounded mx-4'>
-        <div className='text-center'>
+        <div className='flex flex-col  items-center'>
+          <KeyRound></KeyRound>
           <h1 className='py-2 font-extrabold text-2xl'>Verify your Email</h1>
           <p>Enter the 6-digit verification code we've sent to your email</p>
         </div>
