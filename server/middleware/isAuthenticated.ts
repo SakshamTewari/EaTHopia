@@ -1,8 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
+// Extending Express Request to include 'id'
+interface AuthenticatedRequest extends Request {
+  id?: string;
+}
+
 export const isAuthenticated = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
